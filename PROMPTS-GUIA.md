@@ -65,22 +65,22 @@ marcas de agua, sin logotipos.
 
 **cintura.png**
 ```
-Fotografía editorial de alta costura, estética "quiet luxury". Maniquí de costura femenino de cuerpo completo, SIN rostro, en material mate color hueso, de pie en un estudio con fondo neutro uniforme color hueso/greige. Iluminación suave y difusa, sombras sutiles, paleta de tonos tierra. Una cinta métrica de modista en color rojo coral (#E7352C) bien visible y nítida, colocada con precisión: la cinta rodea la parte más estrecha de la cintura. Una línea guía punteada roja sutil marca la dirección de la medida. Composición vertical 3:4, minimalista, elegante, realista, alta resolución. Sin texto, sin números, sin marcas de agua, sin logotipos.
+Fotografía editorial de alta costura, estética "quiet luxury". Maniquí de costura femenino de cuerpo completo, SIN rostro, en material mate color hueso, de pie en un estudio con fondo neutro uniforme color hueso/greige. Iluminación suave y difusa, sombras sutiles, paleta de tonos tierra. Una cinta métrica de modista AMARILLA (amarillo brillante clásico de modista) bien visible y nítida, colocada con precisión: la cinta rodea la parte más estrecha de la cintura. Una línea guía punteada roja sutil marca la dirección de la medida. Composición vertical 3:4, minimalista, elegante, realista, alta resolución. Sin texto, sin números, sin marcas de agua, sin logotipos.
 ```
 
 **talleAtras.png**
 ```
-Fotografía editorial de alta costura, estética "quiet luxury". Maniquí de costura femenino de cuerpo completo, SIN rostro, en material mate color hueso, vista de espalda, en un estudio con fondo neutro uniforme color hueso/greige. Iluminación suave y difusa, sombras sutiles, paleta de tonos tierra. Una cinta métrica de modista en color rojo coral (#E7352C) bien visible y nítida, colocada con precisión: cinta vertical por la espalda desde el ángulo cuello-hombro hasta la cintura. Una línea guía punteada roja sutil marca la dirección de la medida. Composición vertical 3:4, minimalista, elegante, realista, alta resolución. Sin texto, sin números, sin marcas de agua, sin logotipos.
+Fotografía editorial de alta costura, estética "quiet luxury". Maniquí de costura femenino de cuerpo completo, SIN rostro, en material mate color hueso, vista de espalda, en un estudio con fondo neutro uniforme color hueso/greige. Iluminación suave y difusa, sombras sutiles, paleta de tonos tierra. Una cinta métrica de modista AMARILLA (amarillo brillante clásico de modista) bien visible y nítida, colocada con precisión: cinta vertical por la espalda desde el ángulo cuello-hombro hasta la cintura. Una línea guía punteada roja sutil marca la dirección de la medida. Composición vertical 3:4, minimalista, elegante, realista, alta resolución. Sin texto, sin números, sin marcas de agua, sin logotipos.
 ```
 
 **punoAnatomico.png**
 ```
-Fotografía editorial de alta costura, estética "quiet luxury", primer plano. Muñeca y mano de un maniquí femenino SIN rostro, en material mate color hueso, sobre fondo neutro uniforme color hueso/greige. Iluminación suave y difusa. Una cinta métrica de modista en color rojo coral (#E7352C) bien visible y nítida, colocada con precisión: la cinta rodea la muñeca. Composición vertical 3:4, minimalista, elegante, realista, alta resolución. Sin texto, sin números, sin marcas de agua, sin logotipos.
+Fotografía editorial de alta costura, estética "quiet luxury", primer plano. Muñeca y mano de un maniquí femenino SIN rostro, en material mate color hueso, sobre fondo neutro uniforme color hueso/greige. Iluminación suave y difusa. Una cinta métrica de modista AMARILLA (amarillo brillante clásico de modista) bien visible y nítida, colocada con precisión: la cinta rodea la muñeca. Composición vertical 3:4, minimalista, elegante, realista, alta resolución. Sin texto, sin números, sin marcas de agua, sin logotipos.
 ```
 
 **bota.png**
 ```
-Fotografía editorial de alta costura, estética "quiet luxury", primer plano. Tobillo y pie en punta de un maniquí femenino SIN rostro, en material mate color hueso, sobre fondo neutro uniforme color hueso/greige. Iluminación suave y difusa. Una cinta métrica de modista en color rojo coral (#E7352C) bien visible y nítida, colocada con precisión: la cinta rodea el tobillo y el empeine. Composición vertical 3:4, minimalista, elegante, realista, alta resolución. Sin texto, sin números, sin marcas de agua, sin logotipos.
+Fotografía editorial de alta costura, estética "quiet luxury", primer plano. Tobillo y pie en punta de un maniquí femenino SIN rostro, en material mate color hueso, sobre fondo neutro uniforme color hueso/greige. Iluminación suave y difusa. Una cinta métrica de modista AMARILLA (amarillo brillante clásico de modista) bien visible y nítida, colocada con precisión: la cinta rodea el tobillo y el empeine. Composición vertical 3:4, minimalista, elegante, realista, alta resolución. Sin texto, sin números, sin marcas de agua, sin logotipos.
 ```
 
 ---
