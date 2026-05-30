@@ -1,5 +1,6 @@
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import Model3D from "@/components/Model3D";
 import { GUIDE, GUIDE_TIPS } from "@/lib/measureGuide";
 
 export const metadata = {
@@ -27,14 +28,11 @@ export default function GuiaMedidas() {
         </div>
       </section>
 
-      {/* MODELO 3D (placeholder hasta cargar el .glb) */}
+      {/* MODELO 3D interactivo */}
       <section className="wrap">
-        <div className="model3d">
-          <div className="model3d-badge">Modelo 3D interactivo</div>
-          <div className="model3d-body">
-            <p className="serif">Pronto: maniquí 3D que podrás girar para ver cada medida.</p>
-            <span>Se integrará aquí al exportar el modelo.</span>
-          </div>
+        <div className="model3d live">
+          <div className="model3d-badge">Modelo 3D · arrástralo para girar</div>
+          <Model3D src="/guia/busto.glb" />
         </div>
       </section>
 
