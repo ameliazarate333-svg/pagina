@@ -5,8 +5,9 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { MEASURES, MEASURE_KEYS, TALLA_KEYS, NOTES_KEY, TALLAS_SUPERIOR, TALLAS_INFERIOR, ORDER_STATUSES } from "@/lib/measures";
+import { PRODUCTS } from "@/lib/products";
 
-type View = "resumen" | "medidas" | "pedidos" | "citas" | "perfil";
+type View = "resumen" | "medidas" | "pedidos" | "pedir" | "favoritos" | "citas" | "perfil";
 type Profile = { full_name: string | null; phone: string | null; created_at: string };
 type Order = { id: string; name: string; status: number; created_at: string };
 type Appt = { id: string; type: string; mode: string; date: string; time: string };
@@ -15,6 +16,8 @@ const NAV: [View, string][] = [
   ["resumen", "Resumen"],
   ["medidas", "Mis medidas"],
   ["pedidos", "Mis pedidos"],
+  ["pedir", "Pedir a medida"],
+  ["favoritos", "Favoritos"],
   ["citas", "Citas"],
   ["perfil", "Mi perfil"],
 ];
@@ -33,6 +36,7 @@ export default function Dashboard() {
   const [savedMeta, setSavedMeta] = useState("Aún no has guardado medidas.");
   const [orders, setOrders] = useState<Order[]>([]);
   const [appts, setAppts] = useState<Appt[]>([]);
+  const [favs, setFavs] = useState<string[]>([]);
   const [view, setView] = useState<View>("resumen");
   const [toast, setToast] = useState("");
 
@@ -52,12 +56,14 @@ export default function Dashboard() {
       setUserId(user.id);
       setEmail(user.email || "");
 
-      const [{ data: prof }, { data: meas }, { data: ords }, { data: aps }] = await Promise.all([
+      const [{ data: prof }, { data: meas }, { data: ords }, { data: aps }, { data: favRows }] = await Promise.all([
         supabase.from("profiles").select("full_name, phone, created_at").eq("id", user.id).maybeSingle(),
         supabase.from("measurements").select("data, updated_at").eq("user_id", user.id).maybeSingle(),
         supabase.from("orders").select("id, name, status, created_at").eq("user_id", user.id).order("created_at", { ascending: false }),
         supabase.from("appointments").select("id, type, mode, date, time, created_at").eq("user_id", user.id).order("created_at", { ascending: false }),
+        supabase.from("favorites").select("product_slug").eq("user_id", user.id),
       ]);
+      if (favRows) setFavs((favRows as { product_slug: string }[]).map((f) => f.product_slug));
 
       if (prof) setProfile({ full_name: prof.full_name ?? "", phone: prof.phone ?? "", created_at: prof.created_at });
       if (meas?.data) {
@@ -115,6 +121,28 @@ export default function Dashboard() {
     const { error } = await supabase.from("profiles").update({ full_name: profile.full_name, phone: profile.phone }).eq("id", userId);
     if (error) { showToast("Error al guardar"); return; }
     showToast("Perfil actualizado ✓");
+  }
+
+  async function createCustomOrder(e: React.FormEvent) {
+    e.preventDefault();
+    if (!userId) return;
+    const form = e.target as HTMLFormElement;
+    const fd = new FormData(form);
+    const desc = String(fd.get("desc") || "").trim();
+    if (!desc) { showToast("Describe tu encargo"); return; }
+    const supabase = getClient();
+    const { data, error } = await supabase.from("orders").insert({ user_id: userId, name: desc, status: 0 }).select().single();
+    if (error) { showToast("Error al enviar"); return; }
+    setOrders((os) => [data as Order, ...os]);
+    form.reset();
+    showToast("¡Solicitud enviada! ✓");
+    setView("pedidos");
+  }
+
+  async function removeFav(slug: string) {
+    if (!userId) return;
+    setFavs((f) => f.filter((s) => s !== slug));
+    await getClient().from("favorites").delete().eq("user_id", userId).eq("product_slug", slug);
   }
 
   async function logout() {
@@ -267,6 +295,48 @@ export default function Dashboard() {
                       </div>
                     );
                   })
+                )}
+              </section>
+            )}
+
+            {/* PEDIR A MEDIDA */}
+            {view === "pedir" && (
+              <section>
+                <div className="view-head"><h1>Pedir a medida</h1><p>Cuéntanos qué prenda imaginas. Tu solicitud le llega directo a Amelia y queda en «Mis pedidos» con su seguimiento.</p></div>
+                <div className="panel">
+                  <h3>Tu encargo</h3>
+                  <p className="ph-sub">Describe la prenda: ocasión, estilo, color, fecha del evento, referencias… lo que tengas en mente.</p>
+                  <form onSubmit={createCustomOrder}>
+                    <textarea className="notes-area" name="desc" rows={5} placeholder="Ej: Vestido largo de gala para diciembre, en tono vino, escote en V, manga 3/4…" required />
+                    <div className="row-actions">
+                      <button type="submit" className="btn btn-sm">Enviar solicitud</button>
+                      <button type="button" className="btn btn-ghost btn-sm" onClick={() => setView("medidas")}>Revisar mis medidas</button>
+                    </div>
+                  </form>
+                </div>
+                <p className="muted-empty">¿Aún no tienes tus medidas guardadas? Te las pediremos al confirmar; puedes adelantarlas en <button onClick={() => setView("medidas")} style={{ background: "none", border: "none", color: "var(--accent)", textDecoration: "underline", cursor: "pointer", font: "inherit" }}>Mis medidas</button>.</p>
+              </section>
+            )}
+
+            {/* FAVORITOS */}
+            {view === "favoritos" && (
+              <section>
+                <div className="view-head"><h1>Favoritos</h1><p>Los vestidos que guardaste para no perderlos de vista.</p></div>
+                {favs.length === 0 ? (
+                  <div className="empty"><span className="serif">Aún no tienes favoritos</span>Toca el corazón en cualquier vestido de la <Link href="/coleccion">colección</Link> para guardarlo aquí.</div>
+                ) : (
+                  <div className="coll-grid">
+                    {favs.map((slug) => PRODUCTS.find((p) => p.slug === slug)).filter(Boolean).map((p) => (
+                      <div className="card" key={p!.slug}>
+                        <Link href={`/coleccion/${p!.slug}`} className="card-img" style={{ backgroundImage: `url('${p!.img}')` }} />
+                        <div className="card-meta">
+                          <div><h3 style={{ fontFamily: "var(--serif)", fontSize: "1.3rem" }}>{p!.name}</h3><div className="cat">{p!.cat}</div></div>
+                          <span className="price">{p!.price}</span>
+                        </div>
+                        <button className="ci-remove" style={{ background: "none", border: "none", color: "var(--muted)", fontSize: ".66rem", letterSpacing: ".12em", textTransform: "uppercase", cursor: "pointer", marginTop: ".6rem", padding: 0 }} onClick={() => removeFav(p!.slug)}>Quitar de favoritos</button>
+                      </div>
+                    ))}
+                  </div>
                 )}
               </section>
             )}

@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import AddToCart from "@/components/cart/AddToCart";
+import FavoriteButton from "@/components/FavoriteButton";
 import { PRODUCTS, getProduct } from "@/lib/products";
 
 export function generateStaticParams() {
@@ -44,8 +46,12 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               <div><span>Tallas</span><b>{p.sizes.join(" · ")}</b></div>
             </div>
             <div className="product-cta">
-              <a href={`https://wa.me/573122222222?text=${waText}`} target="_blank" rel="noopener" className="btn btn-solid">Consultar por WhatsApp</a>
-              <Link href="/a-medida" className="btn btn-ghost">Pedir a medida</Link>
+              <AddToCart slug={p.slug} />
+              <FavoriteButton slug={p.slug} />
+            </div>
+            <div className="product-links">
+              <a href={`https://wa.me/573122222222?text=${waText}`} target="_blank" rel="noopener">Consultar por WhatsApp</a>
+              <Link href="/a-medida">Pedir a medida</Link>
             </div>
             <p className="product-note">↳ Todas nuestras piezas se ajustan <strong>sin costo</strong> a tus medidas. ¿Aún no las tienes guardadas? <Link href="/cuenta" style={{ textDecoration: "underline" }}>Crea tu perfil</Link>.</p>
           </div>

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useCart } from "@/components/cart/CartProvider";
 
 const LINKS = [
   ["/coleccion", "Colección"],
@@ -14,6 +15,7 @@ const LINKS = [
 export default function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const { count } = useCart();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -59,6 +61,9 @@ export default function SiteHeader() {
               ))}
             </ul>
           </nav>
+          <Link href="/carrito" className="nav-cart" aria-label="Carrito">
+            Carrito{count > 0 && <span className="cart-badge">{count}</span>}
+          </Link>
           <Link href="/cuenta" className="nav-cta">
             Mi cuenta
           </Link>

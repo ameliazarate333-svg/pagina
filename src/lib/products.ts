@@ -95,3 +95,9 @@ export const PRODUCTS: Product[] = [
 ];
 
 export const getProduct = (slug: string) => PRODUCTS.find((p) => p.slug === slug);
+
+/** Convierte "$320.000" → 320000 (para sumar en el carrito). */
+export const priceToCop = (price: string) => Number(price.replace(/[^0-9]/g, ""));
+
+/** Formatea 320000 → "$320.000" (COP). */
+export const formatCop = (n: number) => "$" + n.toLocaleString("es-CO");

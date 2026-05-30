@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Playfair_Display, Jost } from "next/font/google";
 import "./globals.css";
 import "./account.css";
+import { CartProvider } from "@/components/cart/CartProvider";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -54,7 +55,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" className={`${cormorant.variable} ${playfair.variable} ${jost.variable}`} suppressHydrationWarning>
-      <body suppressHydrationWarning>{children}</body>
+      <body suppressHydrationWarning><CartProvider>{children}</CartProvider></body>
     </html>
   );
 }
