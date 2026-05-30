@@ -28,11 +28,22 @@ export const metadata: Metadata = {
   description:
     "AZ · Amelia Zárate. Alta costura y confección a medida. Vestidos hechos a mano con precisión y oficio.",
   metadataBase: new URL("https://azameliazarate.com"),
+  keywords: [
+    "modista", "alta costura", "confección a medida", "vestidos a medida",
+    "atelier", "Amelia Zárate", "AZ", "costura Colombia", "vestidos de gala",
+  ],
+  alternates: { canonical: "/" },
   openGraph: {
     title: "AZ · Amelia Zárate — Atelier de Alta Costura",
     description: "Alta costura y confección a medida, hecha a mano.",
     type: "website",
     locale: "es_CO",
+    siteName: "AZ · Amelia Zárate",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AZ · Amelia Zárate — Atelier de Alta Costura",
+    description: "Alta costura y confección a medida, hecha a mano.",
   },
 };
 

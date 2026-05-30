@@ -31,9 +31,22 @@ const MEASURES = [
   ["Largo de la prenda", "Del hombro al largo deseado"],
 ];
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ClothingStore",
+  name: "AZ · Amelia Zárate",
+  description: "Atelier de alta costura y confección a medida, hecha a mano.",
+  url: "https://azameliazarate.com",
+  image: "https://azameliazarate.com/opengraph-image",
+  areaServed: { "@type": "Country", name: "Colombia" },
+  knowsLanguage: "es",
+  makesOffer: { "@type": "Offer", itemOffered: { "@type": "Service", name: "Confección de vestidos a medida" } },
+};
+
 export default function Home() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <SiteHeader />
 
       {/* HERO */}

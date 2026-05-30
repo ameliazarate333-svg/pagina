@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import AdminDashboard from "@/components/AdminDashboard";
 
-export const metadata = { title: "Administración · AZ — Amelia Zárate" };
+export const metadata = { title: "Administración · AZ — Amelia Zárate", robots: { index: false, follow: false } };
 export const dynamic = "force-dynamic";
 
 export default async function AdminPage() {
