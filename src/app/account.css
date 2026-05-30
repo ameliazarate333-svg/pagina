@@ -131,6 +131,26 @@
 .acct .toast.show{opacity:1;transform:translate(-50%,0)}
 .acct .loader{min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-style:italic;font-size:1.4rem;color:var(--muted)}
 
+/* ---- ADMIN ---- */
+.acct .adm-item{border:1px solid var(--line);padding:1.2rem 1.4rem;margin-bottom:1rem;transition:border-color .3s}
+.acct .adm-item:hover{border-color:var(--stone)}
+.acct .adm-head{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;cursor:pointer}
+.acct .adm-head h3{font-family:var(--serif);font-size:1.3rem;font-weight:500}
+.acct .adm-sub{font-size:.76rem;color:var(--muted);margin-top:.35rem;line-height:1.5}
+.acct .adm-pill{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);padding:.35rem .7rem;white-space:nowrap}
+.acct .adm-detail{margin-top:1.4rem;padding-top:1.4rem;border-top:1px solid var(--line)}
+.acct .adm-detail h5{font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin:1.2rem 0 .6rem}
+.acct .adm-meas{display:grid;grid-template-columns:repeat(3,1fr);gap:.2rem 1.4rem}
+.acct .adm-meas .mm{display:flex;justify-content:space-between;gap:1rem;font-size:.82rem;border-bottom:1px dotted var(--line);padding:.4rem 0}
+.acct .adm-meas .mm span{color:var(--muted)}
+.acct .adm-meas .mm b{font-family:var(--serif);font-weight:500;color:var(--ink)}
+.acct .statusSel{font-family:var(--sans);font-size:.72rem;letter-spacing:.04em;padding:.5rem .7rem;border:1px solid var(--line);background:var(--ivory);color:var(--ink);cursor:pointer}
+.acct .statusSel:focus{outline:none;border-color:var(--accent)}
+.acct .inline-form{display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-end;margin-top:1rem}
+.acct .inline-form .mfield{flex:1;min-width:160px}
+.acct .muted-empty{color:var(--muted);font-size:.85rem;padding:.5rem 0}
+@media(max-width:640px){.acct .adm-meas{grid-template-columns:repeat(2,1fr)}}
+
 @media(max-width:860px){
   .acct .auth{grid-template-columns:1fr}
   .acct .auth-visual{display:none}

@@ -37,7 +37,7 @@ export async function updateSession(request: NextRequest) {
 
   // Rutas privadas: si no hay sesión, manda a /login
   const path = request.nextUrl.pathname;
-  if (!user && path.startsWith("/cuenta")) {
+  if (!user && (path.startsWith("/cuenta") || path.startsWith("/admin"))) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     url.searchParams.set("next", path);
