@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/cuenta", "/admin", "/login"],
+      disallow: ["/cuenta", "/login"],
     },
     sitemap: "https://azameliazarate.com/sitemap.xml",
   };

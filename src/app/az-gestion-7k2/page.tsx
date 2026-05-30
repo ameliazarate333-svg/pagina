@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 export default async function AdminPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  if (!user) redirect("/login?next=/admin");
+  if (!user) redirect("/login?next=/az-gestion-7k2");
 
   const { data: profile } = await supabase
     .from("profiles")
