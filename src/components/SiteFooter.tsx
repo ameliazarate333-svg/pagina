@@ -34,7 +34,7 @@ export default function SiteFooter() {
         </div>
         <div className="foot-bottom">
           <p>© 2026 AZ™ · Amelia Zárate. Todos los derechos reservados.</p>
-          <p>Privacidad · Términos · Cookies</p>
+          <p><Link href="/privacidad">Privacidad</Link> · Términos · Cookies</p>
         </div>
       </div>
     </footer>

@@ -113,7 +113,7 @@ export default function LoginForm() {
               <div className="field"><label>Contraseña</label><input type="password" value={rgPass} onChange={(e) => setRgPass(e.target.value)} placeholder="Mínimo 6 caracteres" required /></div>
               <label className="consent">
                 <input type="checkbox" checked={rgConsent} onChange={(e) => setRgConsent(e.target.checked)} />
-                <span>Autorizo el tratamiento de mis datos personales y medidas conforme a la <a href="#">Política de Privacidad</a> (Ley 1581 de 2012).</span>
+                <span>Autorizo el tratamiento de mis datos personales y medidas conforme a la <a href="/privacidad" target="_blank" rel="noopener">Política de Privacidad</a> (Ley 1581 de 2012).</span>
               </label>
               <button type="submit" className="btn" disabled={busy}>{busy ? "Creando…" : "Crear mi cuenta"}</button>
               <p className="auth-foot">¿Ya tienes cuenta? <a onClick={() => setTab("login")} style={{ cursor: "pointer" }}>Inicia sesión</a></p>
