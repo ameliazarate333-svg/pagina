@@ -104,7 +104,7 @@ export default function AdminDashboard({ adminName }: { adminName: string }) {
         <header className="dash-top">
           <Link href="/" aria-label="AZ">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className="dash-logo" src="/logo-az-mark.svg" alt="AZ" />
+            <img className="dash-logo" src="/logo-az.svg" alt="AZ · Amelia Zárate" />
           </Link>
           <div className="dash-user">
             <span className="uname" style={{ fontSize: ".82rem", letterSpacing: ".2em", textTransform: "uppercase", color: "var(--muted)", fontFamily: "var(--sans)" }}>Administración</span>

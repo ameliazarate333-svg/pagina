@@ -33,3 +33,7 @@ next-env.d.ts
 
 # dev server log
 /dev.log
+
+# token de gestión de Supabase (temporal, NO subir)
+/.mgmt-token
+/.svc-key

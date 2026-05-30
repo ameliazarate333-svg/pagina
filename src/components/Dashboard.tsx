@@ -144,7 +144,7 @@ export default function Dashboard() {
         <header className="dash-top">
           <Link href="/" aria-label="AZ">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className="dash-logo" src="/logo-az-mark.svg" alt="AZ" />
+            <img className="dash-logo" src="/logo-az.svg" alt="AZ · Amelia Zárate" />
           </Link>
           <div className="dash-user">
             <span className="uname">{firstName}</span>
