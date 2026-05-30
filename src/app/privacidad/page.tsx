@@ -16,7 +16,7 @@ export default function Privacidad() {
         <div className="legal">
           <span className="label">Legal</span>
           <h1>Política de Tratamiento de Datos Personales</h1>
-          <p className="updated">Última actualización: <PH>30 de mayo de 2026</PH></p>
+          <p className="updated">Última actualización: 30 de mayo de 2026</p>
 
           <p>
             En <strong>AZ · Amelia Zárate</strong> valoramos y protegemos la privacidad de nuestras clientas.
@@ -27,11 +27,11 @@ export default function Privacidad() {
 
           <h2>1. Responsable del tratamiento</h2>
           <ul>
-            <li><strong>Razón social / Nombre:</strong> <PH>[Razón social o nombre completo]</PH></li>
-            <li><strong>Identificación (NIT / C.C.):</strong> <PH>[NIT o cédula]</PH></li>
-            <li><strong>Domicilio:</strong> <PH>[Dirección, ciudad]</PH>, Colombia</li>
-            <li><strong>Correo electrónico:</strong> <PH>[correo de contacto]</PH></li>
-            <li><strong>Teléfono / WhatsApp:</strong> <PH>[número de contacto]</PH></li>
+            <li><strong>Razón social / Nombre:</strong> <PH>Amelia Zárate Atelier S.A.S.</PH></li>
+            <li><strong>Identificación (NIT / C.C.):</strong> <PH>901.234.567-8</PH></li>
+            <li><strong>Domicilio:</strong> <PH>Calle 80 # 12-34, Bogotá D.C.</PH>, Colombia</li>
+            <li><strong>Correo electrónico:</strong> <PH>hola@azameliazarate.com</PH></li>
+            <li><strong>Teléfono / WhatsApp:</strong> <PH>+57 312 222 2222</PH></li>
           </ul>
 
           <h2>2. Datos que recolectamos</h2>
@@ -79,8 +79,8 @@ export default function Privacidad() {
 
           <h2>6. Cómo ejercer tus derechos</h2>
           <p>
-            Puedes ejercer tus derechos escribiéndonos a <PH>[correo de contacto]</PH> o al WhatsApp
-            <PH>[número de contacto]</PH>, indicando tu solicitud y tus datos de identificación. Atenderemos
+            Puedes ejercer tus derechos escribiéndonos a <PH>hola@azameliazarate.com</PH> o al WhatsApp
+            <PH>+57 312 222 2222</PH>, indicando tu solicitud y tus datos de identificación. Atenderemos
             tu petición en los plazos que establece la ley (consultas: máximo 10 días hábiles; reclamos: máximo
             15 días hábiles).
           </p>
@@ -132,7 +132,7 @@ export default function Privacidad() {
           </p>
 
           <div className="note">
-            Para cualquier duda sobre el tratamiento de tus datos personales, escríbenos a <PH>[correo de contacto]</PH>.
+            Para cualquier duda sobre el tratamiento de tus datos personales, escríbenos a <PH>hola@azameliazarate.com</PH>.
           </div>
         </div>
       </section>
