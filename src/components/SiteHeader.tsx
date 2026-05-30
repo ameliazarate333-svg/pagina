@@ -4,11 +4,11 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const LINKS = [
-  ["#coleccion", "Colección"],
-  ["#medida", "A Medida"],
+  ["/coleccion", "Colección"],
+  ["/a-medida", "A Medida"],
   ["/guia-medidas", "Guía de Medidas"],
-  ["#atelier", "El Atelier"],
-  ["#contacto", "Contacto"],
+  ["/atelier", "El Atelier"],
+  ["/contacto", "Contacto"],
 ];
 
 export default function SiteHeader() {

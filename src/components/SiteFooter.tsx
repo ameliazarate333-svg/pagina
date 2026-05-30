@@ -12,29 +12,30 @@ export default function SiteFooter() {
           </div>
           <div className="foot-col">
             <h5>Explorar</h5>
-            <a href="#coleccion">Colección</a>
-            <a href="#medida">A Medida</a>
+            <Link href="/coleccion">Colección</Link>
+            <Link href="/a-medida">A Medida</Link>
             <Link href="/guia-medidas">Guía de Medidas</Link>
-            <a href="#atelier">El Atelier</a>
+            <Link href="/atelier">El Atelier</Link>
+            <Link href="/diario">Diario</Link>
           </div>
           <div className="foot-col">
             <h5>Atención</h5>
             <Link href="/cuenta">Agenda una cita</Link>
-            <a href="#">Preguntas frecuentes</a>
-            <a href="#">Envíos y devoluciones</a>
+            <Link href="/preguntas-frecuentes">Preguntas frecuentes</Link>
+            <Link href="/envios">Envíos y devoluciones</Link>
             <Link href="/cuenta">Mi cuenta</Link>
           </div>
           <div className="foot-col">
             <h5>Contacto</h5>
-            <a href="#">WhatsApp</a>
-            <a href="#">hola@azameliazarate.com</a>
+            <a href="https://wa.me/573122222222" target="_blank" rel="noopener">WhatsApp</a>
+            <a href="mailto:hola@azameliazarate.com">hola@azameliazarate.com</a>
             <a href="#">Instagram</a>
-            <a href="#">Ubicación</a>
+            <Link href="/contacto">Ubicación</Link>
           </div>
         </div>
         <div className="foot-bottom">
           <p>© 2026 AZ™ · Amelia Zárate. Todos los derechos reservados.</p>
-          <p><Link href="/privacidad">Privacidad</Link> · Términos · Cookies</p>
+          <p><Link href="/privacidad">Privacidad</Link> · <Link href="/terminos">Términos</Link> · <Link href="/cookies">Cookies</Link></p>
         </div>
       </div>
     </footer>

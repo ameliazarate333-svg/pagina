@@ -2,17 +2,11 @@ import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import LandingFx from "@/components/LandingFx";
+import { PRODUCTS } from "@/lib/products";
 
 const bg = (url: string) => ({ backgroundImage: `url('${url}')` });
 
-const COLLECTION = [
-  { name: "Vestido Lino", cat: "Día · Lino belga", price: "$320", img: "https://images.unsplash.com/photo-1539008835657-9e8e9680c956?q=80&w=700&auto=format&fit=crop" },
-  { name: "Túnica Hueso", cat: "Cóctel · Seda", price: "$480", img: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?q=80&w=700&auto=format&fit=crop" },
-  { name: "Slip Greige", cat: "Noche · Satén", price: "$540", img: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?q=80&w=700&auto=format&fit=crop" },
-  { name: "Vestido Arena", cat: "Gala · Crepé", price: "$690", img: "https://images.unsplash.com/photo-1566174053879-31528523f8ae?q=80&w=700&auto=format&fit=crop" },
-  { name: "Camisero Taupe", cat: "Día · Algodón", price: "$295", img: "https://images.unsplash.com/photo-1623609163859-ca93c959b98a?q=80&w=700&auto=format&fit=crop" },
-  { name: "Vestido Marfil", cat: "Novia civil · Crepé", price: "$820", img: "https://images.unsplash.com/photo-1581044777550-4cfa60707c03?q=80&w=700&auto=format&fit=crop" },
-];
+const COLLECTION = PRODUCTS.slice(0, 6);
 
 const STEPS = [
   ["01", "Consulta", "Conversamos sobre tu ocasión, estilo y telas. Presencial o virtual."],
@@ -64,8 +58,8 @@ export default function Home() {
               Solo tú, la tela y la precisión.
             </p>
             <div className="hero-actions">
-              <a href="#coleccion" className="btn btn-solid">Ver colección</a>
-              <a href="#medida" className="btn btn-ghost">Confección a medida</a>
+              <Link href="/coleccion" className="btn btn-solid">Ver colección</Link>
+              <Link href="/a-medida" className="btn btn-ghost">Confección a medida</Link>
             </div>
           </div>
           <div className="hero-media">
@@ -118,16 +112,16 @@ export default function Home() {
           </div>
           <div className="coll-grid">
             {COLLECTION.map((c) => (
-              <article className="card" data-reveal key={c.name}>
+              <Link className="card" data-reveal key={c.slug} href={`/coleccion/${c.slug}`}>
                 <div className="card-img" style={bg(c.img)}><span className="quick">Ver detalle</span></div>
                 <div className="card-meta">
                   <div><h3>{c.name}</h3><div className="cat">{c.cat}</div></div>
                   <span className="price">{c.price}</span>
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
-          <div className="coll-foot" data-reveal><a href="#" className="btn btn-ghost">Ver toda la colección</a></div>
+          <div className="coll-foot" data-reveal><Link href="/coleccion" className="btn btn-ghost">Ver toda la colección</Link></div>
         </div>
       </section>
 
