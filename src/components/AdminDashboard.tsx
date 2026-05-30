@@ -4,17 +4,16 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { MEASURE_GROUPS, ALL_MEASURE_KEYS, ORDER_STATUSES } from "@/lib/measures";
+import { MEASURES, MEASURE_KEYS, ORDER_STATUSES } from "@/lib/measures";
 
 type Tab = "clientas" | "pedidos" | "citas";
+type MData = Record<string, number | string>;
 type Profile = { id: string; full_name: string | null; email: string | null; phone: string | null; created_at: string; is_admin: boolean };
-type Meas = { user_id: string; data: Record<string, number>; updated_at: string };
+type Meas = { user_id: string; data: MData; updated_at: string };
 type Order = { id: string; user_id: string; name: string; status: number; created_at: string };
 type Appt = { id: string; user_id: string; type: string; mode: string; date: string; time: string };
 
-const LABELS: Record<string, string> = Object.fromEntries(
-  MEASURE_GROUPS.flatMap((g) => g.items.map((i) => [i.k, i.l]))
-);
+const LABELS: Record<string, string> = Object.fromEntries(MEASURES.map((i) => [i.k, i.l]));
 
 export default function AdminDashboard({ adminName }: { adminName: string }) {
   const router = useRouter();
@@ -24,7 +23,7 @@ export default function AdminDashboard({ adminName }: { adminName: string }) {
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState<Tab>("clientas");
   const [profiles, setProfiles] = useState<Profile[]>([]);
-  const [meas, setMeas] = useState<Record<string, Record<string, number>>>({});
+  const [meas, setMeas] = useState<Record<string, MData>>({});
   const [orders, setOrders] = useState<Order[]>([]);
   const [appts, setAppts] = useState<Appt[]>([]);
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -48,7 +47,7 @@ export default function AdminDashboard({ adminName }: { adminName: string }) {
         supabase.from("appointments").select("id, user_id, type, mode, date, time, created_at").order("date", { ascending: true }),
       ]);
       setProfiles((profs as Profile[]) || []);
-      const map: Record<string, Record<string, number>> = {};
+      const map: Record<string, MData> = {};
       (ms as Meas[] | null)?.forEach((m) => { map[m.user_id] = (m.data as Record<string, number>) || {}; });
       setMeas(map);
       setOrders((ords as Order[]) || []);
@@ -137,8 +136,8 @@ export default function AdminDashboard({ adminName }: { adminName: string }) {
                 {clientas.length === 0 && <p className="muted-empty">Aún no hay clientas registradas.</p>}
                 {clientas.map((c) => {
                   const md = meas[c.id] || {};
-                  const filled = ALL_MEASURE_KEYS.filter((k) => md[k] != null).length;
-                  const pct = Math.round((filled / ALL_MEASURE_KEYS.length) * 100);
+                  const filled = MEASURE_KEYS.filter((k) => md[k] != null).length;
+                  const pct = Math.round((filled / MEASURE_KEYS.length) * 100);
                   const cOrders = orders.filter((o) => o.user_id === c.id);
                   const open = expanded === c.id;
                   return (
@@ -156,14 +155,20 @@ export default function AdminDashboard({ adminName }: { adminName: string }) {
                       </div>
                       {open && (
                         <div className="adm-detail">
+                          <h5>Tallas de referencia</h5>
+                          <div className="adm-meas">
+                            <div className="mm"><span>Superior (camiseta/blusa)</span><b>{md.tallaSuperior || "—"}</b></div>
+                            <div className="mm"><span>Inferior (jean/pantalón)</span><b>{md.tallaInferior || "—"}</b></div>
+                          </div>
                           <h5>Medidas (cm)</h5>
                           {filled === 0 ? <p className="muted-empty">La clienta aún no ha ingresado medidas.</p> : (
                             <div className="adm-meas">
-                              {ALL_MEASURE_KEYS.filter((k) => md[k] != null).map((k) => (
+                              {MEASURE_KEYS.filter((k) => md[k] != null).map((k) => (
                                 <div className="mm" key={k}><span>{LABELS[k]}</span><b>{md[k]}</b></div>
                               ))}
                             </div>
                           )}
+                          {md.notas && (<><h5>Notas de la clienta</h5><p className="adm-sub" style={{ fontStyle: "italic" }}>“{md.notas}”</p></>)}
                           <h5>Pedidos</h5>
                           {cOrders.length === 0 ? <p className="muted-empty">Sin pedidos.</p> : cOrders.map((o) => (
                             <div key={o.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "1rem", padding: ".5rem 0", borderBottom: "1px dotted var(--line)" }}>

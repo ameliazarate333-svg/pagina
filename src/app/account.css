@@ -116,6 +116,9 @@
 .acct .appt-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem 2rem}
 .acct .select,.acct .appt-grid input{width:100%;background:transparent;border:none;border-bottom:1px solid var(--line);padding:.6rem 0;font-family:var(--serif);font-size:1.1rem;color:var(--ink)}
 .acct .select:focus,.acct .appt-grid input:focus{outline:none;border-bottom-color:var(--accent)}
+.acct textarea.notes-area{width:100%;background:transparent;border:1px solid var(--line);padding:.9rem 1rem;font-family:var(--serif);font-size:1.05rem;color:var(--ink);resize:vertical;line-height:1.55}
+.acct textarea.notes-area:focus{outline:none;border-color:var(--accent)}
+.acct textarea.notes-area::placeholder{color:var(--sand)}
 .acct .upcoming{border:1px solid var(--line);background:var(--bone);padding:1.4rem;margin-bottom:1.6rem;display:flex;align-items:center;gap:1.2rem}
 .acct .upcoming .cal{font-family:var(--display);text-align:center;border-right:1px solid var(--line);padding-right:1.2rem;line-height:1}
 .acct .upcoming .cal .d{font-size:1.9rem}

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { MEASURE_GROUPS, ALL_MEASURE_KEYS, ORDER_STATUSES } from "@/lib/measures";
+import { MEASURES, MEASURE_KEYS, TALLA_KEYS, NOTES_KEY, TALLAS_SUPERIOR, TALLAS_INFERIOR, ORDER_STATUSES } from "@/lib/measures";
 
 type View = "resumen" | "medidas" | "pedidos" | "citas" | "perfil";
 type Profile = { full_name: string | null; phone: string | null; created_at: string };
@@ -75,8 +75,8 @@ export default function Dashboard() {
   }, [router]);
 
   const firstName = (profile.full_name || "").split(" ")[0] || "bienvenida";
-  const filled = ALL_MEASURE_KEYS.filter((k) => measures[k] != null && measures[k] !== "").length;
-  const pct = Math.round((filled / ALL_MEASURE_KEYS.length) * 100);
+  const filled = MEASURE_KEYS.filter((k) => measures[k] != null && measures[k] !== "").length;
+  const pct = Math.round((filled / MEASURE_KEYS.length) * 100);
   const activeOrders = orders.filter((o) => o.status < ORDER_STATUSES.length - 1).length;
   const nextAppt = appts[0];
 
@@ -84,8 +84,10 @@ export default function Dashboard() {
     e.preventDefault();
     if (!userId) return;
     const supabase = getClient();
-    const data: Record<string, number> = {};
-    ALL_MEASURE_KEYS.forEach((k) => { if (measures[k] !== "" && measures[k] != null) data[k] = parseFloat(measures[k]); });
+    const data: Record<string, number | string> = {};
+    MEASURE_KEYS.forEach((k) => { if (measures[k] !== "" && measures[k] != null) data[k] = parseFloat(measures[k]); });
+    TALLA_KEYS.forEach((k) => { if (measures[k]) data[k] = measures[k]; });
+    if (measures[NOTES_KEY]?.trim()) data[NOTES_KEY] = measures[NOTES_KEY].trim();
     const { error } = await supabase.from("measurements").upsert({ user_id: userId, data, updated_at: new Date().toISOString() });
     if (error) { showToast("Error al guardar"); return; }
     setSavedMeta("Última actualización: " + new Date().toLocaleString("es-CO", { dateStyle: "long", timeStyle: "short" }));
@@ -185,25 +187,52 @@ export default function Dashboard() {
             {/* MEDIDAS */}
             {view === "medidas" && (
               <section>
-                <div className="view-head"><h1>Mis medidas</h1><p>Todas en centímetros. Los campos marcados <span style={{ color: "var(--accent)" }}>•</span> son los esenciales. ¿No sabes cómo medirte? <Link href="/#medidas">Mira la guía</Link>.</p></div>
+                <div className="view-head"><h1>Mis medidas</h1><p>Tus tallas comerciales de referencia y tus medidas exactas en centímetros. ¿No sabes cómo medirte? <Link href="/#medidas">¿Cómo medirme?</Link></p></div>
                 <form onSubmit={saveMeasures}>
-                  {MEASURE_GROUPS.map((g) => (
-                    <div className="mgroup" key={g.g}>
-                      <h4>{g.g}<span className="g-label">{g.gl}</span></h4>
-                      <div className="mgrid">
-                        {g.items.map((it) => (
-                          <div className="mfield" key={it.k}>
-                            <label>{it.l}{it.ess && <span className="ess">• esencial</span>}</label>
-                            <div className="mwrap">
-                              <input type="number" step="0.5" min="0" placeholder="0" value={measures[it.k] ?? ""} onChange={(e) => setMeasures((m) => ({ ...m, [it.k]: e.target.value }))} />
-                              <span className="unit">cm</span>
-                            </div>
-                            <div className="mhint">{it.h}</div>
-                          </div>
-                        ))}
+                  {/* Tallas de referencia */}
+                  <div className="mgroup">
+                    <h4>Tallas de referencia<span className="g-label">Para una mejor asesoría</span></h4>
+                    <div className="mgrid">
+                      <div className="mfield">
+                        <label>Talla superior (camiseta / blusa)</label>
+                        <select className="select" value={measures.tallaSuperior ?? ""} onChange={(e) => setMeasures((m) => ({ ...m, tallaSuperior: e.target.value }))}>
+                          <option value="">Selecciona…</option>
+                          {TALLAS_SUPERIOR.map((t) => <option key={t} value={t}>{t}</option>)}
+                        </select>
+                      </div>
+                      <div className="mfield">
+                        <label>Talla inferior (jean / pantalón)</label>
+                        <select className="select" value={measures.tallaInferior ?? ""} onChange={(e) => setMeasures((m) => ({ ...m, tallaInferior: e.target.value }))}>
+                          <option value="">Selecciona…</option>
+                          {TALLAS_INFERIOR.map((t) => <option key={t} value={t}>{t}</option>)}
+                        </select>
                       </div>
                     </div>
-                  ))}
+                  </div>
+
+                  {/* Medidas exactas */}
+                  <div className="mgroup">
+                    <h4>Medidas detalladas<span className="g-label">En centímetros</span></h4>
+                    <div className="mgrid">
+                      {MEASURES.map((it) => (
+                        <div className="mfield" key={it.k}>
+                          <label>{it.l}</label>
+                          <div className="mwrap">
+                            <input type="number" step="0.5" min="0" placeholder={`Ej. ${it.ej}`} value={measures[it.k] ?? ""} onChange={(e) => setMeasures((m) => ({ ...m, [it.k]: e.target.value }))} />
+                            <span className="unit">cm</span>
+                          </div>
+                          <div className="mhint">{it.h}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Notas */}
+                  <div className="mgroup">
+                    <h4>Notas para nuestras modistas<span className="g-label">Opcional</span></h4>
+                    <textarea className="notes-area" rows={4} placeholder="Especificaciones adicionales… (ej: prefiero el largo a la rodilla, tela fresca, alergia a ciertos materiales)" value={measures.notas ?? ""} onChange={(e) => setMeasures((m) => ({ ...m, notas: e.target.value }))} />
+                  </div>
+
                   <div className="save-bar">
                     <div>
                       <div className="meta">{savedMeta}</div>
