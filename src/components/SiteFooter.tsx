@@ -14,7 +14,7 @@ export default function SiteFooter() {
             <h5>Explorar</h5>
             <a href="#coleccion">Colección</a>
             <a href="#medida">A Medida</a>
-            <a href="#medidas">Guía de Medidas</a>
+            <Link href="/guia-medidas">Guía de Medidas</Link>
             <a href="#atelier">El Atelier</a>
           </div>
           <div className="foot-col">

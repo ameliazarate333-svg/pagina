@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 const LINKS = [
   ["#coleccion", "Colección"],
   ["#medida", "A Medida"],
-  ["#medidas", "Guía de Medidas"],
+  ["/guia-medidas", "Guía de Medidas"],
   ["#atelier", "El Atelier"],
   ["#contacto", "Contacto"],
 ];

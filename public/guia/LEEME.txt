@@ -1,0 +1,45 @@
+IMÁGENES DE LA GUÍA DE MEDIDAS
+================================
+
+Coloca aquí UNA imagen por medida, generada en Flow.
+Nómbrala EXACTAMENTE así (en .png) para que aparezca sola en la web:
+
+CONTORNOS (horizontales)
+  cuello.png
+  busto.png
+  pecho.png
+  submamario.png
+  cintura.png
+  cadera.png
+
+MEDIDAS VERTICALES
+  talleFrente.png
+  centroFrente.png
+  talleAtras.png
+  centroAtras.png
+  largoCostado.png
+  hombroHombro.png
+  largoHombro.png
+
+ANCHOS Y SEPARACIONES (superiores)
+  anchoPecho.png
+  anchoEspalda.png
+  separacionBusto.png
+  alturaBusto.png
+  largoBrazo.png
+
+CONTORNOS Y LARGOS (inferiores)
+  punoAnatomico.png
+  punoPrenda.png
+  largoPantalon.png
+  largoTiro.png
+  rodilla.png
+  bota.png
+
+RECOMENDACIONES PARA GENERAR EN FLOW
+------------------------------------
+- Mismo maniquí / mismo estilo en todas (coherencia de marca).
+- Fondo neutro claro (hueso/greige) para que combine con la web.
+- La cinta métrica RESALTADA (color contrastante) justo en el punto de la medida.
+- Formato vertical 3:4 (ej. 900 x 1200 px).
+- Mientras no exista la imagen, la web muestra un degradado elegante (no se rompe).

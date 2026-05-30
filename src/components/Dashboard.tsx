@@ -187,7 +187,7 @@ export default function Dashboard() {
             {/* MEDIDAS */}
             {view === "medidas" && (
               <section>
-                <div className="view-head"><h1>Mis medidas</h1><p>Tus tallas comerciales de referencia y tus medidas exactas en centímetros. ¿No sabes cómo medirte? <Link href="/#medidas">¿Cómo medirme?</Link></p></div>
+                <div className="view-head"><h1>Mis medidas</h1><p>Tus tallas comerciales de referencia y tus medidas exactas en centímetros. ¿No sabes cómo medirte? <Link href="/guia-medidas">¿Cómo medirme?</Link></p></div>
                 <form onSubmit={saveMeasures}>
                   {/* Tallas de referencia */}
                   <div className="mgroup">
