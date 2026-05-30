@@ -4,9 +4,10 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import AdminProducts from "@/components/AdminProducts";
 import { MEASURES, MEASURE_KEYS, ORDER_STATUSES } from "@/lib/measures";
 
-type Tab = "clientas" | "pedidos" | "citas";
+type Tab = "productos" | "clientas" | "pedidos" | "citas";
 type MData = Record<string, number | string>;
 type Profile = { id: string; full_name: string | null; email: string | null; phone: string | null; created_at: string; is_admin: boolean };
 type Meas = { user_id: string; data: MData; updated_at: string };
@@ -92,6 +93,7 @@ export default function AdminDashboard({ adminName }: { adminName: string }) {
   if (loading) return <div className="acct"><div className="loader">Cargando administración…</div></div>;
 
   const NAV: [Tab, string, number][] = [
+    ["productos", "Productos", 0],
     ["clientas", "Clientas", clientas.length],
     ["pedidos", "Pedidos", orders.length],
     ["citas", "Citas", futureAppts],
@@ -115,7 +117,7 @@ export default function AdminDashboard({ adminName }: { adminName: string }) {
           <aside className="dash-nav">
             {NAV.map(([t, label, n]) => (
               <button key={t} className={`navbtn${tab === t ? " on" : ""}`} onClick={() => { setTab(t); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
-                <span className="ic" />{label} <span style={{ opacity: .5, marginLeft: "auto" }}>{n}</span>
+                <span className="ic" />{label} {n > 0 && <span style={{ opacity: .5, marginLeft: "auto" }}>{n}</span>}
               </button>
             ))}
           </aside>
@@ -130,6 +132,8 @@ export default function AdminDashboard({ adminName }: { adminName: string }) {
             </div>
 
             {/* CLIENTAS */}
+            {tab === "productos" && <AdminProducts onToast={showToast} />}
+
             {tab === "clientas" && (
               <section>
                 <h3 style={{ fontFamily: "var(--serif)", fontSize: "1.6rem", margin: "1rem 0 1.4rem" }}>Clientas</h3>

@@ -1,11 +1,12 @@
 import type { MetadataRoute } from "next";
-import { PRODUCTS } from "@/lib/products";
+import { fetchProducts } from "@/lib/products";
 import { POSTS } from "@/lib/posts";
 
 const BASE = "https://azameliazarate.com";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
+  const PRODUCTS = await fetchProducts();
   const fixed: MetadataRoute.Sitemap = [
     { url: BASE, lastModified: now, changeFrequency: "monthly", priority: 1 },
     { url: `${BASE}/coleccion`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },

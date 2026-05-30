@@ -1,7 +1,9 @@
 import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import { PRODUCTS } from "@/lib/products";
+import { fetchProducts, formatCop } from "@/lib/products";
+
+export const revalidate = 60;
 
 export const metadata = {
   title: "Colección · AZ — Amelia Zárate",
@@ -10,7 +12,8 @@ export const metadata = {
 
 const bg = (url: string) => ({ backgroundImage: `url('${url}')` });
 
-export default function Coleccion() {
+export default async function Coleccion() {
+  const products = await fetchProducts();
   return (
     <>
       <SiteHeader />
@@ -26,17 +29,24 @@ export default function Coleccion() {
               tus medidas. ¿Quieres algo único? También las hacemos <Link href="/a-medida" style={{ textDecoration: "underline" }}>a medida</Link>.
             </p>
           </div>
-          <div className="coll-grid">
-            {PRODUCTS.map((c) => (
-              <Link className="card" key={c.slug} href={`/coleccion/${c.slug}`}>
-                <div className="card-img" style={bg(c.img)}><span className="quick">Ver detalle</span></div>
-                <div className="card-meta">
-                  <div><h3>{c.name}</h3><div className="cat">{c.cat}</div></div>
-                  <span className="price">{c.price}</span>
-                </div>
-              </Link>
-            ))}
-          </div>
+          {products.length === 0 ? (
+            <p style={{ color: "var(--muted)" }}>Pronto publicaremos nuestra colección.</p>
+          ) : (
+            <div className="coll-grid">
+              {products.map((c) => (
+                <Link className="card" key={c.slug} href={`/coleccion/${c.slug}`}>
+                  <div className="card-img" style={bg(c.image_url || "")}>
+                    {!c.available && <span className="sold-badge">Agotado</span>}
+                    <span className="quick">Ver detalle</span>
+                  </div>
+                  <div className="card-meta">
+                    <div><h3>{c.name}</h3><div className="cat">{c.category}</div></div>
+                    <span className="price">{formatCop(c.price_cop)}</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </section>
       <SiteFooter />

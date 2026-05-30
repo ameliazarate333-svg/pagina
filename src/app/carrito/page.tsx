@@ -1,18 +1,33 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { useCart } from "@/components/cart/CartProvider";
-import { getProduct, priceToCop, formatCop } from "@/lib/products";
+import { publicClient } from "@/lib/supabase/public";
+import { type Product, formatCop } from "@/lib/products";
 
 export default function Carrito() {
   const { items, setQty, remove } = useCart();
-  const lines = items.map((i) => ({ ...i, p: getProduct(i.slug)! })).filter((l) => l.p);
-  const total = lines.reduce((s, l) => s + priceToCop(l.p.price) * l.qty, 0);
+  const [prodMap, setProdMap] = useState<Record<string, Product>>({});
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await publicClient().from("products").select("*");
+      const m: Record<string, Product> = {};
+      ((data as Product[]) || []).forEach((p) => (m[p.slug] = p));
+      setProdMap(m);
+      setLoaded(true);
+    })();
+  }, []);
+
+  const lines = items.map((i) => ({ ...i, p: prodMap[i.slug] })).filter((l) => l.p);
+  const total = lines.reduce((s, l) => s + l.p.price_cop * l.qty, 0);
 
   function checkout() {
-    const lineText = lines.map((l) => `• ${l.p.name} x${l.qty} — ${formatCop(priceToCop(l.p.price) * l.qty)}`).join("\n");
+    const lineText = lines.map((l) => `• ${l.p.name} x${l.qty} — ${formatCop(l.p.price_cop * l.qty)}`).join("\n");
     const msg = `Hola AZ, quiero comprar:\n${lineText}\n\nTotal: ${formatCop(total)}`;
     window.open(`https://wa.me/573122222222?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
   }
@@ -29,7 +44,9 @@ export default function Carrito() {
             </h2>
           </div>
 
-          {lines.length === 0 ? (
+          {!loaded ? (
+            <p style={{ color: "var(--muted)" }}>Cargando…</p>
+          ) : lines.length === 0 ? (
             <div className="cart-empty">
               <span className="serif">Tu carrito está vacío</span>
               Aún no has añadido vestidos. <Link href="/coleccion" style={{ textDecoration: "underline" }}>Explora la colección</Link>.
@@ -39,10 +56,10 @@ export default function Carrito() {
               <div className="cart-lines">
                 {lines.map((l) => (
                   <div className="cart-line" key={l.slug}>
-                    <Link href={`/coleccion/${l.slug}`} className="ci-img" style={{ backgroundImage: `url('${l.p.img}')` }} />
+                    <Link href={`/coleccion/${l.slug}`} className="ci-img" style={{ backgroundImage: `url('${l.p.image_url || ""}')` }} />
                     <div className="ci-main">
                       <Link href={`/coleccion/${l.slug}`}><h3>{l.p.name}</h3></Link>
-                      <div className="cat">{l.p.cat}</div>
+                      <div className="cat">{l.p.category}</div>
                       <div className="qty">
                         <button onClick={() => setQty(l.slug, l.qty - 1)} aria-label="Restar">–</button>
                         <span>{l.qty}</span>
@@ -50,7 +67,7 @@ export default function Carrito() {
                       </div>
                       <button className="ci-remove" onClick={() => remove(l.slug)}>Quitar</button>
                     </div>
-                    <div className="ci-price">{formatCop(priceToCop(l.p.price) * l.qty)}</div>
+                    <div className="ci-price">{formatCop(l.p.price_cop * l.qty)}</div>
                   </div>
                 ))}
               </div>

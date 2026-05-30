@@ -276,7 +276,9 @@ section{position:relative}
 
 /* ============ FICHA DE PRODUCTO ============ */
 .product-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,4.5rem);align-items:start}
-.product-img{aspect-ratio:3/4;background-size:cover;background-position:center;background-color:var(--greige);border:1px solid var(--line)}
+.product-img{aspect-ratio:3/4;background-size:cover;background-position:center;background-color:var(--greige);border:1px solid var(--line);position:relative;overflow:hidden}
+.sold-badge{position:absolute;top:.8rem;left:.8rem;z-index:2;background:var(--ink);color:var(--bone);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;padding:.4rem .7rem}
+.sold-badge.lg{top:1.2rem;left:1.2rem;font-size:.66rem;padding:.55rem .9rem}
 .product-info{padding-top:.5rem}
 .product-back{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:inline-block;margin-bottom:2rem;transition:color .3s}
 .product-back:hover{color:var(--ink)}

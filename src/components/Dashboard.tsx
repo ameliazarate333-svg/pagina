@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { MEASURES, MEASURE_KEYS, TALLA_KEYS, NOTES_KEY, TALLAS_SUPERIOR, TALLAS_INFERIOR, ORDER_STATUSES } from "@/lib/measures";
-import { PRODUCTS } from "@/lib/products";
+import { fetchProducts, formatCop, type Product } from "@/lib/products";
 
 type View = "resumen" | "medidas" | "pedidos" | "pedir" | "favoritos" | "citas" | "perfil";
 type Profile = { full_name: string | null; phone: string | null; created_at: string };
@@ -37,6 +37,7 @@ export default function Dashboard() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [appts, setAppts] = useState<Appt[]>([]);
   const [favs, setFavs] = useState<string[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [view, setView] = useState<View>("resumen");
   const [toast, setToast] = useState("");
 
@@ -64,6 +65,7 @@ export default function Dashboard() {
         supabase.from("favorites").select("product_slug").eq("user_id", user.id),
       ]);
       if (favRows) setFavs((favRows as { product_slug: string }[]).map((f) => f.product_slug));
+      fetchProducts().then(setProducts);
 
       if (prof) setProfile({ full_name: prof.full_name ?? "", phone: prof.phone ?? "", created_at: prof.created_at });
       if (meas?.data) {
@@ -326,12 +328,12 @@ export default function Dashboard() {
                   <div className="empty"><span className="serif">Aún no tienes favoritos</span>Toca el corazón en cualquier vestido de la <Link href="/coleccion">colección</Link> para guardarlo aquí.</div>
                 ) : (
                   <div className="coll-grid">
-                    {favs.map((slug) => PRODUCTS.find((p) => p.slug === slug)).filter(Boolean).map((p) => (
+                    {favs.map((slug) => products.find((p) => p.slug === slug)).filter(Boolean).map((p) => (
                       <div className="card" key={p!.slug}>
-                        <Link href={`/coleccion/${p!.slug}`} className="card-img" style={{ backgroundImage: `url('${p!.img}')` }} />
+                        <Link href={`/coleccion/${p!.slug}`} className="card-img" style={{ backgroundImage: `url('${p!.image_url || ""}')` }} />
                         <div className="card-meta">
-                          <div><h3 style={{ fontFamily: "var(--serif)", fontSize: "1.3rem" }}>{p!.name}</h3><div className="cat">{p!.cat}</div></div>
-                          <span className="price">{p!.price}</span>
+                          <div><h3 style={{ fontFamily: "var(--serif)", fontSize: "1.3rem" }}>{p!.name}</h3><div className="cat">{p!.category}</div></div>
+                          <span className="price">{formatCop(p!.price_cop)}</span>
                         </div>
                         <button className="ci-remove" style={{ background: "none", border: "none", color: "var(--muted)", fontSize: ".66rem", letterSpacing: ".12em", textTransform: "uppercase", cursor: "pointer", marginTop: ".6rem", padding: 0 }} onClick={() => removeFav(p!.slug)}>Quitar de favoritos</button>
                       </div>

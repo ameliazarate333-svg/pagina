@@ -2,11 +2,11 @@ import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import LandingFx from "@/components/LandingFx";
-import { PRODUCTS } from "@/lib/products";
+import { fetchProducts, formatCop } from "@/lib/products";
+
+export const revalidate = 300;
 
 const bg = (url: string) => ({ backgroundImage: `url('${url}')` });
-
-const COLLECTION = PRODUCTS.slice(0, 6);
 
 const STEPS = [
   ["01", "Consulta", "Conversamos sobre tu ocasión, estilo y telas. Presencial o virtual."],
@@ -37,7 +37,8 @@ const jsonLd = {
   makesOffer: { "@type": "Offer", itemOffered: { "@type": "Service", name: "Confección de vestidos a medida" } },
 };
 
-export default function Home() {
+export default async function Home() {
+  const COLLECTION = (await fetchProducts(true)).slice(0, 6);
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
@@ -113,10 +114,10 @@ export default function Home() {
           <div className="coll-grid">
             {COLLECTION.map((c) => (
               <Link className="card" data-reveal key={c.slug} href={`/coleccion/${c.slug}`}>
-                <div className="card-img" style={bg(c.img)}><span className="quick">Ver detalle</span></div>
+                <div className="card-img" style={bg(c.image_url || "")}><span className="quick">Ver detalle</span></div>
                 <div className="card-meta">
-                  <div><h3>{c.name}</h3><div className="cat">{c.cat}</div></div>
-                  <span className="price">{c.price}</span>
+                  <div><h3>{c.name}</h3><div className="cat">{c.category}</div></div>
+                  <span className="price">{formatCop(c.price_cop)}</span>
                 </div>
               </Link>
             ))}
